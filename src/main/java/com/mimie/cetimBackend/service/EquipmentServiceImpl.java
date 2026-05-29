@@ -6,7 +6,7 @@ import com.mimie.cetimBackend.exception.ResourceNotFoundException;
 import com.mimie.cetimBackend.model.Equipment;
 import com.mimie.cetimBackend.repository.EquipmentRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.annotation.Transactional; //allows use of create
 
 import java.util.List;
 
@@ -17,14 +17,13 @@ public class EquipmentServiceImpl
 
     private final EquipmentRepository repository;
 
-    public EquipmentServiceImpl(
-            EquipmentRepository repository) {
+    //constructor injection
+    public EquipmentServiceImpl(EquipmentRepository repository) {
         this.repository = repository;
     }
 
     @Override
-    public EquipmentResponse create(
-            EquipmentRequest request) {
+    public EquipmentResponse create(EquipmentRequest request) {
 
         Equipment equipment = Equipment.builder()
                 .inventoryNo(request.getInventoryNo())
@@ -42,8 +41,7 @@ public class EquipmentServiceImpl
                 .serialNumber(request.getSerialNumber())
                 .build();
 
-        return mapToResponse(
-                repository.save(equipment));
+        return mapToResponse(repository.save(equipment));
     }
 
     private EquipmentResponse mapToResponse(Equipment equipment) {
@@ -77,7 +75,7 @@ public class EquipmentServiceImpl
     @Override
     public EquipmentResponse findById(Long id) {
 
-        Equipment equipment = repository.findById(Math.toIntExact(id))
+        Equipment equipment = repository.findById(id)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(
                                 "Equipment not found"));
@@ -90,7 +88,7 @@ public class EquipmentServiceImpl
             Long id,
             EquipmentRequest request) {
 
-        Equipment equipment = repository.findById(Math.toIntExact(id))
+        Equipment equipment = repository.findById(id)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(
                                 "Equipment not found"));
@@ -114,7 +112,7 @@ public class EquipmentServiceImpl
     @Override
     public void delete(Long id) {
 
-        Equipment equipment = repository.findById(Math.toIntExact(id))
+        Equipment equipment = repository.findById(id)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(
                                 "Equipment not found"));

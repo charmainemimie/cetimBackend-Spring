@@ -37,14 +37,13 @@ public class EquipmentController {
         return equipmentService.findAll();
     }
 
-    @GetMapping("/{id}")
-    public EquipmentResponse getById(
-            @PathVariable Long id) {
+    @GetMapping("equipment/{id}")
+    public EquipmentResponse getById(@PathVariable Long id) {
 
         return equipmentService.findById(id);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("equipment/{id}")
     public EquipmentResponse update(
             @PathVariable Long id,
             @RequestBody EquipmentRequest request) {
@@ -52,9 +51,8 @@ public class EquipmentController {
         return equipmentService.update(id, request);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(
-            @PathVariable Long id) {
+    @DeleteMapping("equipment/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
 
         equipmentService.delete(id);
 
