@@ -5,8 +5,11 @@ WORKDIR /app
 # Install Maven inside the container
 RUN apt-get update && apt-get install -y maven
 
-# Copy the source code and build the JAR
-COPY src .
+# FIX: Copy the pom.xml first, then the src directory properly
+COPY pom.xml .
+COPY src ./src
+
+# Now Maven will find the pom.xml in /app and the source code in /app/src
 RUN mvn clean package -DskipTests
 
 # Stage 2: Run the application using Java 26 Runtime
